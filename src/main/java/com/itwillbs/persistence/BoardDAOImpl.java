@@ -50,7 +50,37 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		return boardList;
 	}
+
+	@Override
+	public BoardVO getBoard(Integer bno) throws Exception {
+		log.info("getBoard(Integer bno) 호출");
+		
+		//파라미터 전달 pstmt 에 물음표 채우는 동작 
+		//mapper에서 리턴 받은 값 
+		BoardVO vo = sqlSession.selectOne(NAMESPACE+".read",bno);
+		
+		
+		return vo;
+		//return sqlSession.selectOne(NAMESPACE+".read",bno);
+	}
+
+	@Override
+	public void updateReadCount(Integer bno) throws Exception {
+		log.info("updateReadCount(Integer bno) 호출");
+		
+		//SQL - mapper 쿼리구문 호출 
+		sqlSession.update(NAMESPACE+".updateReadCnt",bno);
+	}
 	
+	
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		log.info("Integer updateBoard(BoardVO vo) 호출");
+		
+		int cnt = sqlSession.update(NAMESPACE+".updateBoard",vo);
+		
+		return cnt;
+	}
 	
 
 }
